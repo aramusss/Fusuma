@@ -85,6 +85,7 @@ public var fusumaTintIcons: Bool = true
 }
 
 public struct ImageMetadata {
+    public let localIdentifier: String
     public let mediaType: PHAssetMediaType
     public let pixelWidth: Int
     public let pixelHeight: Int
@@ -362,6 +363,7 @@ public class FusumaViewController: UIViewController {
         requestImage(with: self.albumView.phAsset, cropRect: size) { (asset, image, url) in
             
             let metaData = ImageMetadata(
+                localIdentifier: self.albumView.phAsset.localIdentifier,
                 mediaType: self.albumView.phAsset.mediaType,
                 pixelWidth: self.albumView.phAsset.pixelWidth,
                 pixelHeight: self.albumView.phAsset.pixelHeight,
@@ -434,6 +436,7 @@ public class FusumaViewController: UIViewController {
             requestImage(with: asset, cropRect: cropRect) { asset, result, url in
                 
                 let metaData = ImageMetadata(
+                    localIdentifier: self.albumView.phAsset.localIdentifier,
                     mediaType: self.albumView.phAsset.mediaType,
                     pixelWidth: self.albumView.phAsset.pixelWidth,
                     pixelHeight: self.albumView.phAsset.pixelHeight,
@@ -470,6 +473,7 @@ extension FusumaViewController: FSAlbumViewDelegate, FSCameraViewDelegate, FSVid
     func cameraShotFinished(_ image: UIImage, asset: PHAsset, url: URL) {
       
       let metaData = ImageMetadata(
+        localIdentifier: asset.localIdentifier,
         mediaType: asset.mediaType,
         pixelWidth: asset.pixelWidth,
         pixelHeight: asset.pixelHeight,
