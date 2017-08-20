@@ -372,12 +372,14 @@ public class FusumaViewController: UIViewController {
                 isFavourite: self.albumView.phAsset.isFavorite,
                 isHidden: self.albumView.phAsset.isHidden)
           
+            let details = FusumaImageDetails(image: image, url: url, metaData)
+            
             self.dismiss(animated: true, completion: {
-                self.delegate?.fusumaViewControllerDidDismiss(vc: self)
+                    self.delegate?.fusumaViewController(vc: self, didSelectImages: [details], andSource: self.mode)
+                    self.delegate?.fusumaViewControllerDidDismiss(vc: self)
             })
           
-            let details = FusumaImageDetails(image: image, url: url, metaData)
-            self.delegate?.fusumaViewController(vc: self, didSelectImages: [details], andSource: self.mode)
+            
         }
     }
     
@@ -452,6 +454,7 @@ public class FusumaViewController: UIViewController {
                     
                     self.dismiss(animated: true) {
                             self.delegate?.fusumaViewController(vc: self, didSelectImages: multipleDetails, andSource: self.mode)
+                            self.delegate?.fusumaViewControllerDidDismiss(vc: self)
                     }
                 }
             }
