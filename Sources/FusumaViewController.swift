@@ -154,8 +154,6 @@ public class FusumaViewController: UIViewController {
 
         menuView.backgroundColor = fusumaBackgroundColor
         menuView.addBottomBorder(UIColor.black, width: 1.0)
-
-        albumView.allowMultipleSelection = allowMultipleSelection
         
         let bundle = Bundle(for: self.classForCoder)
         
@@ -287,6 +285,8 @@ public class FusumaViewController: UIViewController {
         albumView.layoutIfNeeded()
         cameraView.frame = CGRect(origin: CGPoint.zero, size: cameraShotContainer.frame.size)
         cameraView.layoutIfNeeded()
+        
+        albumView.allowMultipleSelection = allowMultipleSelection
 
         albumView.initialize()
         cameraView.initialize()
