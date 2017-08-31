@@ -272,6 +272,13 @@ public class FusumaViewController: UIViewController {
             cameraView.croppedAspectRatioConstraint?.isActive = false
         }
         
+        albumView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
+        albumView.layoutIfNeeded()
+        
+        albumView.allowMultipleSelection = allowMultipleSelection
+        
+        albumView.initialize()
+
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -287,9 +294,12 @@ public class FusumaViewController: UIViewController {
         cameraView.layoutIfNeeded()
         
         albumView.allowMultipleSelection = allowMultipleSelection
-
-        albumView.initialize()
+        
         cameraView.initialize()
+
+        if albumView.collectionView(albumView.collectionView, numberOfItemsInSection: 0) > 0 {
+            albumView.collectionView(albumView.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
+        }
         
         if hasVideo {
 

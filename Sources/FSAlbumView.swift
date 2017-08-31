@@ -295,7 +295,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     @objc func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
-        let width = (collectionView.frame.width - 3) / 4
+        let width = (UIScreen.main.bounds.width - 3) / 4
         return CGSize(width: width, height: width)
     }
     
