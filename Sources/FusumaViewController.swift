@@ -275,11 +275,11 @@ public class FusumaViewController: UIViewController {
             cameraView.croppedAspectRatioConstraint?.isActive = false
         }
         
+        photoLibraryViewerContainer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         albumView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
-        albumView.layoutIfNeeded()
-        
+
         cameraView.frame = CGRect(origin: CGPoint.zero, size: cameraShotContainer.frame.size)
-        cameraView.layoutIfNeeded()
+
         
         albumView.allowMultipleSelection = allowMultipleSelection
         albumView.initialize()

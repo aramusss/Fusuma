@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     @IBAction func showButtonPressed(_ sender: AnyObject) {
         
         // Show Fusuma
-        let fusuma = FusumaViewController(mode: .camera)
+        let fusuma = FusumaViewController(mode: .library)
         
         fusuma.delegate = self
         fusuma.cropHeightRatio = 0.6

@@ -23,7 +23,6 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var imageCropView: FSImageCropView!
     @IBOutlet weak var imageCropViewContainer: UIView!
     
-    @IBOutlet weak var collectionViewConstraintHeight: NSLayoutConstraint!
     @IBOutlet weak var imageCropViewConstraintTop: NSLayoutConstraint!
 
     @objc weak var delegate: FSAlbumViewDelegate? = nil
@@ -85,8 +84,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
         let panGesture      = UIPanGestureRecognizer(target: self, action: #selector(FSAlbumView.panned(_:)))
         panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
-        
-        collectionViewConstraintHeight.constant = self.frame.height - imageCropViewContainer.frame.height - imageCropViewOriginalConstraintTop
+    
         imageCropViewConstraintTop.constant = 50
         dragDirection = Direction.up
         
@@ -98,7 +96,8 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
         collectionView.register(UINib(nibName: "FSAlbumViewCell", bundle: Bundle(for: self.classForCoder)), forCellWithReuseIdentifier: "FSAlbumViewCell")
         collectionView.backgroundColor = fusumaBackgroundColor
         collectionView.allowsMultipleSelection = allowMultipleSelection
-        
+        collectionView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 342)
+    
         // Never load photos Unless the user allows to access to photo album
         checkPhotoAuth()
         
@@ -178,13 +177,13 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
                 
                 imageCropViewConstraintTop.constant = max(imageCropViewMinimalVisibleHeight - self.imageCropViewContainer.frame.height, currentPos.y + dragDiff - imageCropViewContainer.frame.height)
                 
-                collectionViewConstraintHeight.constant = min(self.frame.height - imageCropViewMinimalVisibleHeight, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
+                //collectionViewConstraintHeight.constant = min(self.frame.height - imageCropViewMinimalVisibleHeight, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
                 
             } else if dragDirection == Direction.down && currentPos.y > cropBottomY {
                 
                 imageCropViewConstraintTop.constant = min(imageCropViewOriginalConstraintTop, currentPos.y - imageCropViewContainer.frame.height)
                 
-                collectionViewConstraintHeight.constant = max(self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
+                //collectionViewConstraintHeight.constant = max(self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
                 
             } else if dragDirection == Direction.stop && collectionView.contentOffset.y < 0 {
                 
@@ -195,7 +194,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
                 
                 imageCropViewConstraintTop.constant = imageCropViewMinimalVisibleHeight - self.imageCropViewContainer.frame.height + currentPos.y - imaginaryCollectionViewOffsetStartPosY
                 
-                collectionViewConstraintHeight.constant = max(self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
+                //collectionViewConstraintHeight.constant = max(self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height, self.frame.height - imageCropViewConstraintTop.constant - imageCropViewContainer.frame.height)
             }
             
         } else {
@@ -219,7 +218,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
                 
                 imageCropViewConstraintTop.constant = imageCropViewMinimalVisibleHeight - self.imageCropViewContainer.frame.height
                 
-                collectionViewConstraintHeight.constant = self.frame.height - imageCropViewMinimalVisibleHeight
+                //collectionViewConstraintHeight.constant = self.frame.height - imageCropViewMinimalVisibleHeight
                 
                 UIView.animate(withDuration: 0.3,
                                delay: 0.0,
@@ -238,7 +237,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
                 imageCropView.changeScrollable(true)
                 
                 imageCropViewConstraintTop.constant = imageCropViewOriginalConstraintTop
-                collectionViewConstraintHeight.constant = self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height
+                //collectionViewConstraintHeight.constant = self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height
                 
                 UIView.animate(withDuration: 0.3,
                                delay: 0.0,
@@ -306,7 +305,7 @@ final class FSAlbumView: UIView, UICollectionViewDataSource, UICollectionViewDel
         imageCropView.changeScrollable(true)
         
         imageCropViewConstraintTop.constant = imageCropViewOriginalConstraintTop
-        collectionViewConstraintHeight.constant = self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height
+        //collectionViewConstraintHeight.constant = self.frame.height - imageCropViewOriginalConstraintTop - imageCropViewContainer.frame.height
         
         UIView.animate(withDuration: 0.2,
                        delay: 0.0,
