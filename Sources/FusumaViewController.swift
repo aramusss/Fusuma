@@ -135,12 +135,15 @@ public class FusumaViewController: UIViewController {
     
     public weak var delegate: FusumaViewControllerDelegate?
     
-    override public func loadView() {
+    
+    public init(mode: FusumaMode) {
+        super.init(nibName: String(describing: FusumaViewController.self), bundle: Bundle(for: FusumaViewController.self.classForCoder()))
         
-        if let view = UINib(nibName: "FusumaViewController", bundle: Bundle(for: self.classForCoder)).instantiate(withOwner: self, options: nil).first as? UIView {
-            
-            self.view = view
-        }
+        self.mode = mode
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override public func viewDidLoad() {
@@ -275,10 +278,15 @@ public class FusumaViewController: UIViewController {
         albumView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
         albumView.layoutIfNeeded()
         
-        albumView.allowMultipleSelection = allowMultipleSelection
+        cameraView.frame = CGRect(origin: CGPoint.zero, size: cameraShotContainer.frame.size)
+        cameraView.layoutIfNeeded()
         
+        albumView.allowMultipleSelection = allowMultipleSelection
         albumView.initialize()
-
+        
+        cameraView.initialize()
+        
+        changeMode(mode)
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -293,13 +301,7 @@ public class FusumaViewController: UIViewController {
         cameraView.frame = CGRect(origin: CGPoint.zero, size: cameraShotContainer.frame.size)
         cameraView.layoutIfNeeded()
         
-        albumView.allowMultipleSelection = allowMultipleSelection
-        
         cameraView.initialize()
-
-        if albumView.collectionView(albumView.collectionView, numberOfItemsInSection: 0) > 0 {
-            albumView.collectionView(albumView.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
-        }
         
         if hasVideo {
 
@@ -307,8 +309,6 @@ public class FusumaViewController: UIViewController {
             videoView.layoutIfNeeded()
             videoView.initialize()
         }
-        
-        changeMode(defaultMode)
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
@@ -538,8 +538,6 @@ private extension FusumaViewController {
     }
     
     func changeMode(_ mode: FusumaMode) {
-
-        if self.mode == mode { return }
         
         //operate this switch before changing mode to stop cameras
         switch self.mode {
