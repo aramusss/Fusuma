@@ -292,10 +292,6 @@ public class FusumaViewController: UIViewController {
         albumView.layoutIfNeeded()
         cameraView.frame = CGRect(origin: CGPoint.zero, size: cameraShotContainer.frame.size)
         cameraView.layoutIfNeeded()
-        
-        albumView.allowMultipleSelection = allowMultipleSelection
-        
-        cameraView.initialize()
 
         if albumView.collectionView(albumView.collectionView, numberOfItemsInSection: 0) > 0 {
             albumView.collectionView(albumView.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
