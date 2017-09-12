@@ -21,8 +21,6 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
     @IBOutlet weak var shotButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
     @IBOutlet weak var flipButton: UIButton!
-    @IBOutlet weak var fullAspectRatioConstraint: NSLayoutConstraint!
-    @objc var croppedAspectRatioConstraint: NSLayoutConstraint?
     
     @objc weak var delegate: FSCameraViewDelegate? = nil
     
@@ -37,6 +35,8 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
     
     fileprivate var motionManager: CMMotionManager?
     fileprivate var currentDeviceOrientation: UIDeviceOrientation?
+    
+    fileprivate var videoLayer: AVCaptureVideoPreviewLayer?
     
     @objc static func instance() -> FSCameraView {
         
@@ -104,11 +104,11 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
             
             session.addOutput(imageOutput!)
             
-            let videoLayer = AVCaptureVideoPreviewLayer(session: session)
-            videoLayer.frame = self.previewViewContainer.bounds
-            videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            videoLayer = AVCaptureVideoPreviewLayer(session: session)
+            videoLayer?.frame = self.previewViewContainer.bounds
+            videoLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             
-            self.previewViewContainer.layer.addSublayer(videoLayer)
+            self.previewViewContainer.layer.addSublayer(videoLayer!)
             
             session.sessionPreset = AVCaptureSession.Preset.photo
             
@@ -354,6 +354,12 @@ final class FSCameraView: UIView, UIGestureRecognizerDelegate {
             return
         }
  
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        videoLayer?.frame = self.previewViewContainer.bounds
     }
 }
 

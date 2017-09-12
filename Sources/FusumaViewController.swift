@@ -253,28 +253,6 @@ public class FusumaViewController: UIViewController {
             ))
         }
         
-        if fusumaCropImage {
-            
-            let heightRatio = getCropHeightRatio()
-            
-            cameraView.croppedAspectRatioConstraint = NSLayoutConstraint(
-                item: cameraView.previewViewContainer,
-                attribute: NSLayoutAttribute.height,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: cameraView.previewViewContainer,
-                attribute: NSLayoutAttribute.width,
-                multiplier: heightRatio,
-                constant: 0)
-
-            cameraView.fullAspectRatioConstraint.isActive     = false
-            cameraView.croppedAspectRatioConstraint?.isActive = true
-            
-        } else {
-            
-            cameraView.fullAspectRatioConstraint.isActive     = true
-            cameraView.croppedAspectRatioConstraint?.isActive = false
-        }
-        
         photoLibraryViewerContainer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         albumView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
 
