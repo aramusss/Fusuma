@@ -121,7 +121,8 @@ public class FusumaViewController: UIViewController {
     @IBOutlet weak var videoButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
 
-    @IBOutlet var libraryFirstConstraints: [NSLayoutConstraint]!
+  @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+  @IBOutlet var libraryFirstConstraints: [NSLayoutConstraint]!
     @IBOutlet var cameraFirstConstraints: [NSLayoutConstraint]!
     
     @objc lazy var albumView  = FSAlbumView.instance()
@@ -156,7 +157,6 @@ public class FusumaViewController: UIViewController {
         videoView.delegate  = self
 
         menuView.backgroundColor = fusumaBackgroundColor
-        menuView.addBottomBorder(UIColor.black, width: 1.0)
         
         let bundle = Bundle(for: self.classForCoder)
         
@@ -253,11 +253,18 @@ public class FusumaViewController: UIViewController {
             ))
         }
         
+        var headerHeight: CGFloat = 50
+        // iPhone X extra padding
+        if #available(iOS 11.0, *) {
+            headerHeight += UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+        }
+        
+        headerHeightConstraint.constant = headerHeight
+        
         photoLibraryViewerContainer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         albumView.frame  = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
 
         cameraView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - 45))
-
         
         albumView.allowMultipleSelection = allowMultipleSelection
         albumView.initialize()
